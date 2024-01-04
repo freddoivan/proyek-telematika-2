@@ -12,6 +12,12 @@ export default function Home() {
         <h1 className="hero__subtitle text-white">
           Pilihlah berat badan anda.
         </h1>
+        <h1 className='text-center text-l text-white font-medium leading-8'>
+        Untuk kategori jenis badan dapat dicek terlebih dahulu pada link berikut:
+        </h1>
+        <h1 className='text-center text-l text-white font-medium leading-8'>
+        <a href='https://doktersehat.com/menghitung-berat-ideal-kalkulator-bmi/'>Klik Ini</a>
+        </h1>
         <div className="flex flex-col space-y-2">
           <Button>
             <Link href="/kurus">Kurus</Link>
