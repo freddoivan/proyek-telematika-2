@@ -2,7 +2,7 @@ import { QueryFunction } from '@tanstack/react-query';
 import axios from 'axios';
 
 /** Add NEXT_PUBLIC_MOCK_DEPLOYMENT_URL to your production deployment on vercel! */
-const baseURL = process.env.API_URL
+const baseURL = 'https://apigetfit.duckdns.org'
 
 export const apiMock = axios.create({
   baseURL,
