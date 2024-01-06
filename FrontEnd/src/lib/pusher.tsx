@@ -8,6 +8,6 @@ export const pusherClient = new PusherClient(
     wsPort: 6001,
     forceTLS: false,
     disableStats: false,
-    enabledTransports: ['ws','wss'],
+    enabledTransports: ['ws'],
   }
 )
