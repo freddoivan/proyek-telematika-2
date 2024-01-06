@@ -5,7 +5,7 @@ import axios from 'axios';
 const baseURL = process.env.NEXT_PUBLIC_MOCK_DEPLOYMENT_URL
 ? `https://${process.env.NEXT_PUBLIC_MOCK_DEPLOYMENT_URL}/api/mock`
 : process.env.NEXT_PUBLIC_VERCEL_URL
-? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
 : 'http://localhost:5000/';
 
 export const apiMock = axios.create({
