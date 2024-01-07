@@ -23,7 +23,6 @@ const UserCard = ({ user, chatId }: Props) => {
       try {
         const response = await apiMock.get(`chat/message/${user.conversationID}`)
         const results = response.data.data
-        console.log(results)
         setInitialMessages(results)
       } catch (err) {
         console.log(err)
