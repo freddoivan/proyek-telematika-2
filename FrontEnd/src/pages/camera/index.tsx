@@ -57,22 +57,14 @@ export default function Index() {
             const pred = model.predict(baseModelPred) as tf.Tensor;
             const bmi = ((await pred.array()) as number[][])[0][0];
 
-            if (bmi < 15) {
-              setWeightStatus("Very severely underweight");
-            } else if (15 >= bmi && bmi < 16) {
-              setWeightStatus("Severely underweight");
-            } else if (16 >= bmi && bmi < 18.5) {
-              setWeightStatus("Underweight");
+            if (bmi < 18.5) {
+              setWeightStatus("Kurus");
             } else if (18.5 >= bmi && bmi < 25) {
               setWeightStatus("Normal");
             } else if (25 >= bmi && bmi < 30) {
-              setWeightStatus("Overweight");
+              setWeightStatus("Gemuk");
             } else if (30 >= bmi && bmi < 35) {
-              setWeightStatus("Moderately obese");
-            } else if (35 >= bmi && bmi < 40) {
-              setWeightStatus("Severely obese");
-            } else {
-              setWeightStatus("Very severely obese");
+              setWeightStatus("Obesitas! Tolong kontak para ahli!");
             }
           }
           // const canvas = canvasRef.current;
@@ -98,7 +90,7 @@ export default function Index() {
         }
         }>{loading ? "Loading" : "Capture and Classify"}</button>
       </div>
-      <h2>{weightStatus}</h2>
+      <h2 style={{ textAlign: 'center', marginTop: '20px' }}>{weightStatus}</h2>
 
       {/* <div className='absolute w-full bg-black opacity-80 h-full overflow-hidden'>
         <div className='flex flex-col items-center justify-center h-full'>
