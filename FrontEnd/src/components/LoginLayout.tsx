@@ -10,7 +10,7 @@ const LoginLayout = ({ children }: Props) => {
     return (
         <React.Fragment>
             <Head>
-                <title>GetFitt</title>\
+                <title>GetFitt</title>
                 <meta name="description" content="Get fit and healthy" />
             </Head>
             <Toaster/>

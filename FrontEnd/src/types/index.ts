@@ -37,3 +37,8 @@ export type Message = {
     senderID : string;
     createdAt : string;
 }
+
+export type Content = {
+    image : string;
+    text : string;
+}
