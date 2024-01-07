@@ -1,66 +1,47 @@
-"use client"
-import { Layout } from '@/components/Layout'
+import { Layout } from "@/components/Layout";
+import SugestCard from "@/components/card/SugestCard";
+import { Example } from "@/content/latihankurus";
+import { Example2 } from "@/content/makanankurus";
+import { Content } from "@/types";
+import React from "react";
 
-export default function Home() {
-
+const template = () => {
   return (
     <Layout>
-      <div className='flex flex-col items-center px-10 pt-6'>
-        <h1 className='hero__subtitle text-white'>
-        Kurus? Ingin menambah berat badan? Ini yang harus dilakukan!
-        </h1>
-      <div className='flex flex-row items-center max-h-screen relative px-10 pt-6'>
-        <h1 className='text-white'>
-        Latihan: 
-        <h1>
-        - push up (15-20 rep 1 set, 3 set)
-        </h1>
-        <h1>
-        -	squat (8-12 rep 1 set, 2-3 set)
-        </h1>
-        <h1>
-        - curl dumbell (serah beratnya, 10-12 rep, 3 set)
-        </h1>
-        <h1>
-        -	shoulder press (8-10 rep, 3 set)
-        </h1>
-        <h1>
-        -	bent over rows (8-10 rep, 3 set)
-        </h1>
-        <h1>
-        -	overhead triceps extensions (10-12 rep, 3 set)
-        </h1>
-        <h1>
-        *Jika tidak sanggup boleh diturunkan dan ditingkatkan setiap harinya
-        </h1>
-        <h1>
-        *Harus rutin dilakukan setiap hari untuk mendapatkan hasil maksimal
-        </h1>
-        <div className='flex flex-row-reverse items-center max-h-screen relative px-10 pt-6'></div>
-        <h1 className='text-white'>
-        Makanan:
-        </h1>
-        <h1>
-        Makan makanan berkalori dan protein banyak, disarankan:
-        </h1>
-        <h1>
-        -	Nasi
-        </h1>
-        <h1>
-        -	daging merah
-        </h1>
-        <h1>
-        -	telur
-        </h1>
-        <h1>
-        -	kentang
-        </h1>
-        <h1>
-        -	paha ayam
-        </h1>
-        </h1>
-      </div>
+      <div className="flex flex-col md:flex-row w-screen p-4 h-full space-y-4 md:space-y-0 md:space-x-8">
+        <div className="bg-black h-[30rem] md:w-1/2 relative">
+          <div className="h-6 w-16 bg-white absolute left-0 -top-2 z-50 px-2 ">
+            <p>Latihan</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-auto h-full p-2">
+          {
+            Example.map((item : Content, index) => {
+              return (
+                <SugestCard key={index} image={item.image} text={item.text} />
+              )
+            })
+          }
+
+          </div>
+        </div>
+        <div className="bg-black h-[30rem] md:w-1/2 relative">
+          <div className="h-6 w-16 bg-white absolute left-0 -top-2 z-50 px-2 ">
+            <p>Makan</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-auto h-full p-2">
+          {
+            Example2.map((item : Content, index) => {
+              return (
+                <SugestCard key={index} image={item.image} text={item.text} />
+              )
+            })
+          }
+
+          </div>
+        </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
+
+export default template;
