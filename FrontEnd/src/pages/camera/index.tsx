@@ -1,11 +1,7 @@
 "use client"
 
-import '@tensorflow/tfjs-core';
-import '@tensorflow/tfjs-converter';
-import * as bodySegmentation from '@tensorflow-models/body-segmentation';
-// Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
-import { useEffect, useRef } from 'react';
+import * as tf from '@tensorflow/tfjs';
+import { useEffect, useRef, useState } from 'react';
 import useAuthStore from '@/store/useAuthStore';
 import { Layout } from '@/components/Layout';
 import apiMock from '@/lib/axios-mock';
@@ -14,6 +10,10 @@ import { DEFAULT_TOAST_MESSAGE } from "@/constant/toast";
 import { dataURItoBlob } from '@/lib/helper';
 
 export default function Index() {
+  const [weightStatus, setWeightStatus] = useState('');
+  const [baseModel, setBaseModel] = useState<tf.LayersModel>();
+  const [model, setModel] = useState<tf.LayersModel>();
+  
   const videoRef = useRef<HTMLVideoElement | null>(null);;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const user = useAuthStore.useUser();
@@ -23,30 +23,16 @@ export default function Index() {
   //Perlu Explor lagi untuk mendpatkan data per segment "maskValueToColor / maskValueToLabel" function
   useEffect(() => {
     async function loadBodyPix() {
-      const segmenter = await bodySegmentation.createSegmenter(bodySegmentation.SupportedModels.BodyPix);
+      tf.setBackend('webgl');
       const video = videoRef.current!;
-      const canvas = canvasRef.current!;
+      
+      const baseModel = await tf.loadLayersModel('models/base_model.json');
+      const model = await tf.loadLayersModel('models/model.json');
+      setBaseModel(baseModel);
+      setModel(model);
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      video.srcObject = stream;
-
-      video.onloadedmetadata = () => {
-        video.play();
-
-        async function detectBody() {
-          const segmentation = await segmenter?.segmentPeople(video, { multiSegmentation: false, segmentBodyParts: true });
-          const coloredPartImage = await bodySegmentation.toColoredMask(segmentation, bodySegmentation.bodyPixMaskValueToRainbowColor, { r: 255, g: 255, b: 255, a: 255 });
-          const opacity = 0.5;
-          const flipHorizontal = false;
-          const maskBlurAmount = 0;
-          bodySegmentation.drawMask(
-            canvas, video, coloredPartImage, opacity, maskBlurAmount,
-            flipHorizontal);
-          requestAnimationFrame(detectBody);
-        }
-        
-        detectBody();
-      };
+      video.srcObject = stream;      
     }
 
     loadBodyPix();
@@ -55,35 +41,62 @@ export default function Index() {
   return (
     <Layout>
        <div className='flex flex-col'>
+
       <div className='flex flex-col justify-center items-center md:flex-row md:justify-between'>
         <video ref={videoRef} autoPlay playsInline muted width="640" height="480" />
-        <canvas ref={canvasRef} width="640" height="480" />
       </div>
       <div className='flex items-center justify-center'>
         <button className='border p-2 shadow-md rounded-md' onClick={ async () => {
-          const canvas = canvasRef.current;
-          const a = document.createElement('a');
-          a.href = canvas!.toDataURL();
-          const image = canvas!.toDataURL();
-          let file = dataURItoBlob(image)
-          a.download = `${Date.now().toString()}${user?.name}.png`;
-          const form = new FormData();
-          form.append('image', file);
-          toast.promise(
-            apiMock.post('/image/upload',form,{
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            }),
-            {
-              ...DEFAULT_TOAST_MESSAGE,
-              success: 'Successfully Upload Image',
+          if (baseModel && model) {
+            const video = videoRef.current!;
+            let pixel = tf.browser.fromPixels(video, 3).resizeNearestNeighbor([224, 224]).expandDims(0);
+            const baseModelPred = baseModel.predict(pixel);
+            const pred = model.predict(baseModelPred) as tf.Tensor;
+            const bmi = ((await pred.array()) as number[][])[0][0];
+
+            if (bmi < 15) {
+              setWeightStatus("Very severely underweight");
+            } else if (15 >= bmi && bmi < 16) {
+              setWeightStatus("Severely underweight");
+            } else if (16 >= bmi && bmi < 18.5) {
+              setWeightStatus("Underweight");
+            } else if (18.5 >= bmi && bmi < 25) {
+              setWeightStatus("Normal");
+            } else if (25 >= bmi && bmi < 30) {
+              setWeightStatus("Overweight");
+            } else if (30 >= bmi && bmi < 35) {
+              setWeightStatus("Moderately obese");
+            } else if (35 >= bmi && bmi < 40) {
+              setWeightStatus("Severely obese");
+            } else {
+              setWeightStatus("Very severely obese");
             }
-          )
+            console.log("click")
+          }
+          // const canvas = canvasRef.current;
+          // const a = document.createElement('a');
+          // a.href = canvas!.toDataURL();
+          // const image = canvas!.toDataURL();
+          // let file = dataURItoBlob(image)
+          // a.download = `${Date.now().toString()}${user?.name}.png`;
+          // const form = new FormData();
+          // form.append('image', file);
+          // toast.promise(
+          //   apiMock.post('/image/upload',form,{
+          //     headers: {
+          //       'Content-Type': 'multipart/form-data'
+          //     }
+          //   }),
+          //   {
+          //     ...DEFAULT_TOAST_MESSAGE,
+          //     success: 'Successfully Upload Image',
+          //   }
+          // )
           // a.click();
         }
         }>Capture</button>
       </div>
+      <h2>{weightStatus}</h2>
 
       {/* <div className='absolute w-full bg-black opacity-80 h-full overflow-hidden'>
         <div className='flex flex-col items-center justify-center h-full'>
