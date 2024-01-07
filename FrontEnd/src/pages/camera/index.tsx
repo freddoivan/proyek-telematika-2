@@ -10,6 +10,7 @@ import { DEFAULT_TOAST_MESSAGE } from "@/constant/toast";
 import { dataURItoBlob } from '@/lib/helper';
 
 export default function Index() {
+  const [loading, setLoading] = useState<Boolean>();
   const [weightStatus, setWeightStatus] = useState('');
   const [baseModel, setBaseModel] = useState<tf.LayersModel>();
   const [model, setModel] = useState<tf.LayersModel>();
@@ -22,7 +23,8 @@ export default function Index() {
 
   //Perlu Explor lagi untuk mendpatkan data per segment "maskValueToColor / maskValueToLabel" function
   useEffect(() => {
-    async function loadBodyPix() {
+    async function setupModal() {
+      setLoading(true);
       tf.setBackend('webgl');
       const video = videoRef.current!;
       
@@ -32,10 +34,11 @@ export default function Index() {
       setModel(model);
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      video.srcObject = stream;      
+      video.srcObject = stream;    
+      setLoading(false);
     }
 
-    loadBodyPix();
+    setupModal();
   }, []);
 
   return (
@@ -71,7 +74,6 @@ export default function Index() {
             } else {
               setWeightStatus("Very severely obese");
             }
-            console.log("click")
           }
           // const canvas = canvasRef.current;
           // const a = document.createElement('a');
@@ -94,7 +96,7 @@ export default function Index() {
           // )
           // a.click();
         }
-        }>Capture</button>
+        }>{loading ? "Loading" : "Capture and Classify"}</button>
       </div>
       <h2>{weightStatus}</h2>
 
