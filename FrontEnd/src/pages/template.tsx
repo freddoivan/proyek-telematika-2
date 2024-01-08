@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import SugestCard from "@/components/card/SugestCard";
-import { Example } from "@/content/example";
+// import { Example } from "@/content/example";
 import { Content } from "@/types";
 import React from "react";
 
