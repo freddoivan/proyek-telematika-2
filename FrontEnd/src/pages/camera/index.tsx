@@ -91,7 +91,7 @@ export default function Index() {
         }>{loading ? "Loading" : "Capture and Classify"}</button>
       </div>
       // <h2 style={{ textAlign: 'center', marginTop: '20px' }}>{weightStatus}</h2>
-      <h2 style={{ textAlign: 'center', marginTop: '20px' }}>{bmi}</h2>
+      <h2 style={{ textAlign: 'center', marginTop: '20px' }}>{bmi !== undefined ? `BMI: ${bmi}` : 'BMI: N/A'}</h2>
 
       {/* <div className='absolute w-full bg-black opacity-80 h-full overflow-hidden'>
         <div className='flex flex-col items-center justify-center h-full'>
