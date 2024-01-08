@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import SugestCard from "@/components/card/SugestCard";
+// import SugestCard from "@/components/card/SugestCard";
 // import { Example } from "@/content/example";
 import { Content } from "@/types";
 import React from "react";
@@ -13,13 +13,13 @@ const template = () => {
             <p>Latihan</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-auto h-full p-2">
-          {
+{/*           {
             Example.map((item : Content, index) => {
               return (
                 <SugestCard key={index} image={item.image} text={item.text} />
               )
             })
-          }
+          } */}
 
           </div>
         </div>
@@ -28,13 +28,13 @@ const template = () => {
             <p>Makan</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-auto h-full p-2">
-          {
+{/*           {
             Example.map((item : Content, index) => {
               return (
                 <SugestCard key={index} image={item.image} text={item.text} />
               )
             })
-          }
+          } */}
 
           </div>
         </div>
