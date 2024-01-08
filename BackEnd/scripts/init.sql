@@ -68,19 +68,19 @@ INSERT INTO
   users (name, email, password, role)
 VALUES
   (
-    'John Doe',
+    'John Doe (Ahli Gizi)',
     'john@mail.com',
     crypt ('password', gen_salt ('bf')),
     'TRAINER'
   ),
   (
-    'Jane Smith',
+    'Jane Smith (Trainer Gym)',
     'jane@mail.com',
     crypt ('password', gen_salt ('bf')),
     'TRAINER'
   ),
   (
-    'Bob Johnson',
+    'Bob Johnson (Instruktur Workout)',
     'bob@mail.com',
     crypt ('password', gen_salt ('bf')),
     'TRAINER'
