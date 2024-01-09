@@ -55,7 +55,7 @@ export default function Index() {
             let pixel = tf.browser.fromPixels(video, 3).resizeNearestNeighbor([224, 224]).expandDims(0);
             const baseModelPred = baseModel.predict(pixel);
             const pred = model.predict(baseModelPred) as tf.Tensor;
-            const bmi = ((await pred.array()) as number[][])[0][0];
+            const bmi = ((await pred.array()) as number[][])[0][0] - 10;
 
             if (bmi < 18.5) {
               setWeightStatus("Kurus");
