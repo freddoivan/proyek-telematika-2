@@ -25,7 +25,7 @@ function Index() {
 
   async function getImage() {
     try {
-      const response = await apiMock.get(`/image/list?page=1`)
+      const response = await apiMock.get(`https://apigetfit.duckdns.org/image/list?page=1`)
       setImage(response.data.data.imgs)
       setCount(response.data.data.count)
     } catch (err) {

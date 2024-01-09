@@ -14,6 +14,7 @@ const formatTimestamp = (timestamp: any) => {
     return formatRelative(subDays(time, 0), new Date())
   }
 const ImageUserCard = ({image,count,total}: Props) => {
+  console.log(image)
   return (
     <div className='w-full flex flex-col justify-center items-center layout space-y-4'>
         {
@@ -21,7 +22,7 @@ const ImageUserCard = ({image,count,total}: Props) => {
             image && total === 0  && image.map((item, index) => (
               <div className="w-1/2 p-3 space-x-3 bg-gray-300 flex flex-row border rounded-md shadow-lg" key={index}>
                 <div>
-               <Image src={`http://${item.imgURL}`} alt='IMAGE' width={100} height={100} className="rounded-md"/>
+               <Image src={`https://${item.imgURL}`} alt='IMAGE' width={100} height={100} className="rounded-md"/>
                </div>
                <div>
                   <p>Scan ke {count-index}</p>

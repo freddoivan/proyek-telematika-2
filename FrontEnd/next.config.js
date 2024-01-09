@@ -15,6 +15,18 @@ const nextConfig = {
         port: '9000',
         pathname: '/profile/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'apigetfit.duckdns.org',
+        port: '',
+        pathname: '/getfitimg/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'apigetfit.duckdns.org',
+        port: '',
+        pathname: '/profile/**',
+      },
     ],
   },
 }

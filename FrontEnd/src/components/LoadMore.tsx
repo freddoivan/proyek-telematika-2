@@ -25,7 +25,7 @@ export function LoadMore({total}: {total: number}) {
     // Once the page 8 is reached repeat the process all over again.
     await delay(2000);
     const nextPage = page + 1;
-    const newProducts = await apiMock.get(`/image/list?page=${nextPage}`)
+    const newProducts = await apiMock.get(`https://apigetfit.duckdns.org/image/list?page=${nextPage}`)
     setImage((prevProducts:ImageCard[]) => [...prevProducts, ...newProducts.data.data.imgs]);
 
     setPage(nextPage);
