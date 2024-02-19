@@ -102,7 +102,7 @@ export default function Index() {
                   .expandDims(0);
                 const baseModelPred = baseModel.predict(pixel);
                 const pred = model.predict(baseModelPred) as tf.Tensor;
-                const bmi = ((await pred.array()) as number[][])[0][0] - 10;
+                const bmi = ((await pred.array()) as number[][])[0][0] - 8;
 
                 if (bmi < 18.5) {
                   setWeightStatus("Kurus");
