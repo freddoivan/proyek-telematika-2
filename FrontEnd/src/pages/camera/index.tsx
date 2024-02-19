@@ -10,9 +10,6 @@ import { DEFAULT_TOAST_MESSAGE } from "@/constant/toast";
 import { dataURItoBlob } from "@/lib/helper";
 import * as bodySegmentation from "@tensorflow-models/body-segmentation";
 import { useRouter } from "next/router";
-import { kurus } from "@/kurus/index";
-import { normal } from "@/normal/index";
-import { gemuk } from "@/gemuk/index";
 
 export default function Index() {
   const [loading, setLoading] = useState<Boolean>();
@@ -111,13 +108,13 @@ export default function Index() {
 
                 if (bmi < 18.5) {
                   setWeightStatus("Kurus");
-                  navigate('/kurus');
+                  navigate.push('/kurus');
                 } else if (18.5 >= bmi && bmi < 25) {
                   setWeightStatus("Normal");
-                  navigate('/normal');
+                  navigate.push('/normal');
                 } else if (25 >= bmi && bmi < 30) {
                   setWeightStatus("Gemuk");
-                  navigate('/gemuk');
+                  navigate.push('/gemuk');
                 } else if (30 >= bmi && bmi < 35) {
                   setWeightStatus("Obesitas! Tolong kontak para ahli!");
                 }
@@ -129,7 +126,7 @@ export default function Index() {
                 a.href = canvas!.toDataURL();
                 const image = canvas!.toDataURL();
                 let file = dataURItoBlob(image);
-                a.download = `${Date.now().toString()}${user?.name}.png`;
+                a.download = ${Date.now().toString()}${user?.name}.png;
                 const form = new FormData();
                 form.append("image", file);
                 toast.promise(
