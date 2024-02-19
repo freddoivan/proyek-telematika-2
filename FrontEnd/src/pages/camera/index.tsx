@@ -9,6 +9,10 @@ import toast from "react-hot-toast";
 import { DEFAULT_TOAST_MESSAGE } from "@/constant/toast";
 import { dataURItoBlob } from "@/lib/helper";
 import * as bodySegmentation from "@tensorflow-models/body-segmentation";
+import { useRouter } from "next/router";
+import { kurus } from "@/kurus/index";
+import { normal } from "@/normal/index";
+import { gemuk } from "@/gemuk/index";
 
 export default function Index() {
   const [loading, setLoading] = useState<Boolean>();
@@ -107,10 +111,13 @@ export default function Index() {
 
                 if (bmi < 18.5) {
                   setWeightStatus("Kurus");
+                  navigate('/kurus');
                 } else if (18.5 >= bmi && bmi < 25) {
                   setWeightStatus("Normal");
+                  navigate('/normal');
                 } else if (25 >= bmi && bmi < 30) {
                   setWeightStatus("Gemuk");
+                  navigate('/gemuk');
                 } else if (30 >= bmi && bmi < 35) {
                   setWeightStatus("Obesitas! Tolong kontak para ahli!");
                 }
