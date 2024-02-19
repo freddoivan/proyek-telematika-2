@@ -20,6 +20,7 @@ export default function Index() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const user = useAuthStore.useUser();
+  const navigate = useRouter()
 
   //Perlu Explor lagi untuk mendpatkan data per segment "maskValueToColor / maskValueToLabel" function
   useEffect(() => {
